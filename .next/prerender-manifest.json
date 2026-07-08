@@ -1,11 +1,1 @@
-{
-  "version": 4,
-  "routes": {},
-  "dynamicRoutes": {},
-  "notFoundRoutes": [],
-  "preview": {
-    "previewModeId": "ad49aa51f945b4e6cbc2ff65fd9423e7",
-    "previewModeSigningKey": "6a5ea3e327bb620d75d5075fa9544cb25c5b05638a3f863d715ddaa4c6445b0d",
-    "previewModeEncryptionKey": "0e729abe058c4d557e2214c7f34c05fd1c29f45d6298762706dcaf71761f4097"
-  }
-}
+{"version":4,"routes":{"/docs/getting-started":{},"/docs":{}},"dynamicRoutes":{"/docs/[[...mdxPath]]":{"dataRoute":null,"dataRouteRegex":null,"fallback":null,"fallbackRevalidate":false,"fallbackSourceRoute":"/docs/[[...mdxPath]]","routeRegex":"^\\/docs(?:\\/(.+?))?(?:\\/)?$","allowHeader":[]}},"notFoundRoutes":[],"preview":{"previewModeId":"dabaf001814e71b6611d510eed2b4523","previewModeSigningKey":"7d2c4d2806207c03e1b042ca425fa8d08531ee5013f5f6883a8bd88599870559","previewModeEncryptionKey":"b1ffc893cbef7670af38f9ace828dc4a34d0c99b20b99526a8fa89975feb98bf"}}

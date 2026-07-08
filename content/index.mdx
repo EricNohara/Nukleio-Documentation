@@ -1,11 +1,117 @@
-# Welcome to My Docs
+---
+title: Introduction
+description: Welcome to the Nukleio documentation.
+---
 
-This is the home page of my documentation site.
+# Welcome to Nukleio
 
-## What is this?
+Nukleio is a platform for managing the content that powers your portfolio website from a single location.
 
-This site is built with **Nextra**, **Next.js**, and **MDX**.
+Instead of hardcoding project information, experience, education, resumes, images, and other portfolio data directly into your website, Nukleio stores everything in one centralized backend and exposes it through a simple API. Your portfolio becomes a client that consumes this data, allowing updates to appear immediately without modifying or redeploying your website.
 
-## First steps
+---
 
-Use the sidebar to navigate through the documentation.
+## Why Nukleio?
+
+Keeping a portfolio up to date is often tedious:
+
+- Every change requires editing source code.
+- Multiple portfolio sites must each be updated individually.
+- Images and documents have to be manually replaced.
+- APIs and backend services need to be recreated for every new project.
+
+Nukleio solves this by separating your **content** from your **presentation**.
+
+Update your information once, and every connected portfolio can immediately access the latest version.
+
+---
+
+## Core Features
+
+- 🚀 Centralized portfolio management
+- 📂 File storage for resumes, transcripts, portraits, and project images
+- 🔐 Secure authentication with Supabase
+- 🌐 Public API for portfolio integrations
+- 💳 Stripe payment support
+- 🤖 AI-powered features (coming soon)
+- ⚡ Built with Next.js and Supabase
+- 📈 Designed for scalability and performance
+
+---
+
+## Architecture
+
+At a high level, Nukleio consists of four components:
+
+```text
+Portfolio Website
+        │
+        ▼
+  Nukleio Public API
+        │
+        ▼
+ Next.js Backend
+        │
+        ▼
+    Supabase
+(Database + Auth + Storage)
+```
+
+Your portfolio never needs direct database access. Instead, it communicates with the public API, which securely retrieves the appropriate data from Supabase.
+
+---
+
+## Who is Nukleio for?
+
+Nukleio is designed for developers who:
+
+- maintain one or more portfolio websites
+- want to separate content from frontend code
+- want a reusable backend across multiple portfolio projects
+- prefer managing portfolio data through an intuitive dashboard instead of editing source files
+
+---
+
+## Technology Stack
+
+| Component      | Technology         |
+| -------------- | ------------------ |
+| Frontend       | Next.js            |
+| Backend        | Next.js App Router |
+| Database       | Supabase           |
+| Authentication | Supabase Auth      |
+| Storage        | Supabase Storage   |
+| Payments       | Stripe             |
+| AI             | OpenAI API         |
+| Hosting        | Vercel             |
+| Scheduled Jobs | AWS Lambda         |
+
+---
+
+## Documentation Guide
+
+If you're new to Nukleio, the recommended reading order is:
+
+1. Getting Started
+2. Installation
+3. Environment Variables
+4. Supabase Setup
+5. Authentication
+6. API Reference
+7. Deployment
+
+---
+
+## Project Goals
+
+The long-term vision for Nukleio is to provide a complete platform for managing developer portfolios, including:
+
+- portfolio content management
+- public API integrations
+- AI-assisted content generation
+- customizable templates
+- premium features and marketplace integrations
+
+---
+
+Continue to **Getting Started** to install and configure your first Nukleio instance.
