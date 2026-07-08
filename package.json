@@ -13,11 +13,11 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
-    "next": "^15.5.20",
-    "nextra": "^4.6.0",
-    "nextra-theme-docs": "^4.6.0",
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7"
+    "next": "15.5.20",
+    "nextra": "4.6.0",
+    "nextra-theme-docs": "4.6.0",
+    "react": "19.2.7",
+    "react-dom": "19.2.7"
   },
   "devDependencies": {
     "@types/node": "26.1.1",
