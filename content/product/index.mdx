@@ -1,0 +1,140 @@
+﻿---
+title: Product
+description: Explore Nukleio's portfolio management, public API, analytics, and generative AI tools.
+---
+
+# Product
+
+Nukleio is a portfolio management platform for developers who want one source of truth for their professional content. It combines a content dashboard, public portfolio API, usage analytics, billing, and generative AI tools built around job-search workflows.
+
+Use this page as a product overview before moving into the step-by-step docs.
+
+## Portfolio Content Management
+
+Nukleio lets you manage the information that powers your portfolio website without editing frontend code for every content change.
+
+You can manage:
+
+- profile details, including name, bio, contact information, role, company, and location
+- social and professional links, including GitHub and LinkedIn
+- project records with descriptions, dates, links, languages, frameworks, technologies, and thumbnails
+- uploaded assets such as portraits, resumes, transcripts, and project images
+- API keys for connected portfolio sites
+
+Your portfolio site can stay focused on presentation while Nukleio manages the data behind it.
+
+## Public Portfolio API
+
+Connected portfolio websites use Nukleio's public API to request your portfolio data.
+
+The main endpoint is:
+
+```txt
+GET /api/public/getUserData
+```
+
+Your portfolio sends a Nukleio API key as a bearer token. Nukleio validates the key and returns public portfolio data as JSON.
+
+This makes it possible to update content once in Nukleio and reuse it across one or more portfolio frontends.
+
+## Dashboard Analytics
+
+The Nukleio home dashboard helps you understand how connected portfolio sites are using your API keys.
+
+Dashboard views include:
+
+- recent activity
+- recent latency distribution
+- top connections by API key
+- success and failure availability
+
+These views help you confirm that portfolio integrations are working and make it easier to identify failed requests, stale keys, or unexpected usage patterns.
+
+## Generative AI Agents
+
+Nukleio includes generative AI agents for job-search and portfolio workflows. These agents use your Nukleio profile and portfolio data to help create professional materials faster.
+
+### Resume Agent
+
+The resume agent generates resume files from your Nukleio data.
+
+It supports two generation modes:
+
+- standard resume generation from selected profile, education, experience, course, project, and skill records
+- AI-enhanced resume generation that can choose and improve relevant user information to include in your resume to optimize for a specific job type
+
+The resume agent renders generates a PDF, uploads it to storage, and returns a public resume URL.
+
+Use it when you want to quickly create a polished and optimized resume from the content you already maintain in Nukleio.
+
+### Cover Letter Agent
+
+The cover letter agent helps generate and revise job-specific cover letters.
+
+The workflow can use:
+
+- job title
+- company name
+- a pasted job description
+- your Nukleio portfolio data
+- an optional writing sample
+- user feedback for revisions
+
+Behind the scenes, the cover letter workflow includes agents for job research, writing analysis, user-data filtering, first draft generation, draft evaluation, revision, skills match scoring, and revision naming.
+
+Generated cover letters can be cached, revised, scored against the job, previewed as PDFs, and reused later.
+
+Use it when you want a cover letter that reflects the requirements of a job posting, your writing style, and your actual profile content you already maintain in Nukleio.
+
+### Professional Headshot Agent
+
+The professional headshot agent generates and revises portfolio-ready headshots from a reference image.
+
+It can use:
+
+- a reference photo URL
+- an optional background description
+- an optional background image URL
+- attire selection
+- output layout selection
+- revision feedback
+
+Before generation, the agent validates whether the reference photo is suitable and appropriate. If the photo passes validation, Nukleio generates the headshot, uploads it to storage, and returns a public URL.
+
+Supported attire options include automatic selection, business, business casual, smart casual, casual, tech professional, and academic.
+
+Use it when you need a cleaner profile image with a high level of customization for your portfolio without manually arranging a new photo session with a professional photographer.
+
+## Billing and Plans
+
+Nukleio includes plan-based access for different levels of usage.
+
+Current plan areas include:
+
+- Free plan for small portfolios
+- Developer plan for developers who need more API keys and portfolio tooling
+- Premium plan for active job seekers who want unlimited AI usage and advanced features
+
+See [Pricing](./pricing) for the current feature breakdown.
+
+## How Product Areas Fit Together
+
+```mermaid
+flowchart LR
+    A[Your Data in Nukleio]
+
+    A --> B[Dashboard]
+    A --> C[Portfolio API]
+    A --> D[AI Tools]
+
+    C --> E[Connected Portfolio Website]
+
+    D --> F[Resume Generator]
+    D --> G[Cover Letter Generator]
+    D --> H[Headshot Generator]
+
+    C --> I[API Monitoring]
+    E --> J[Portfolio Analytics]
+```
+
+**The core idea:** keep your portfolio and professional materials connected to the same organized source of truth.

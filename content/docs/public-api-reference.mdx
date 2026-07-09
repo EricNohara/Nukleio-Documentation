@@ -1,0 +1,170 @@
+﻿---
+title: Public API Reference
+description: Reference the public Nukleio endpoint used by portfolio websites.
+---
+
+# Public API Reference
+
+The Nukleio public API lets connected portfolio websites request public portfolio data for an authenticated Nukleio user.
+
+This page documents the customer-facing request shape for portfolio integrations.
+
+## Base URL
+
+Use the live Nukleio application URL for your account or environment.
+
+```txt
+https://YOUR_NUKLEIO_DOMAIN
+```
+
+All endpoint examples below use relative paths. Add the correct base URL when making real requests.
+
+## Authentication
+
+The public API uses bearer API key authentication.
+
+Send your Nukleio API key in the `Authorization` header:
+
+```txt
+Authorization: Bearer YOUR_API_KEY
+```
+
+Nukleio API keys use an `nk_live_` prefix. Treat the full key as sensitive.
+
+## Get User Data
+
+Returns public portfolio data for a connected portfolio site.
+
+```txt
+GET /api/public/getUserData
+```
+
+### Headers
+
+| Header | Required | Description |
+| --- | --- | --- |
+| `Authorization` | Yes | Bearer token containing your Nukleio API key. |
+| `Accept` | No | Use `application/json` when your client sets it explicitly. |
+| `Content-Type` | No | Usually not required for a GET request. |
+| `X-Target-User-Id` | Optional | Used only for integrations that need to target a specific user supported by the API key. Most portfolio integrations do not need this. |
+
+### Example Request
+
+```txt
+GET /api/public/getUserData
+Authorization: Bearer YOUR_API_KEY
+Accept: application/json
+```
+
+### JavaScript Example
+
+```js
+const response = await fetch("https://YOUR_NUKLEIO_DOMAIN/api/public/getUserData", {
+  headers: {
+    Authorization: `Bearer ${process.env.NUKLEIO_API_KEY}`,
+    Accept: "application/json",
+  },
+});
+
+if (!response.ok) {
+  throw new Error(`Nukleio request failed with status ${response.status}`);
+}
+
+const data = await response.json();
+```
+
+## Successful Response
+
+A successful response returns JSON with a `userInfo` property.
+
+```json
+{
+  "userInfo": {
+    "name": "Example User",
+    "bio": "Portfolio bio...",
+    "projects": []
+  }
+}
+```
+
+The exact fields inside `userInfo` depend on the content saved in Nukleio and the public data shape configured for the account.
+
+Portfolio frontends should handle optional or missing fields gracefully. For example, do not assume every user has a transcript, every project has a demo URL, or every social link is present.
+
+## Error Responses
+
+### Missing API Key
+
+If the request does not include a bearer token, the API returns an unauthorized response.
+
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+### Invalid API Key Format
+
+If the key format is invalid, the API can return:
+
+```json
+{
+  "message": "Invalid API key format"
+}
+```
+
+### Unauthorized Key
+
+If the key is not recognized or is not allowed to access the requested data, the API returns:
+
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+### Server Error
+
+If Nukleio cannot complete the request because of an internal issue, the API returns:
+
+```json
+{
+  "message": "Internal server error"
+}
+```
+
+## Status Codes
+
+| Status | Meaning |
+| --- | --- |
+| `200` | Request succeeded and returned portfolio data. |
+| `204` | CORS preflight request succeeded. |
+| `401` | Missing, invalid, or unauthorized API key. |
+| `500` | Nukleio could not complete the request. |
+
+## CORS
+
+The public endpoint supports browser-based portfolio integrations and responds to `OPTIONS` preflight requests.
+
+Allowed request methods include:
+
+```txt
+GET, OPTIONS
+```
+
+Allowed request headers include:
+
+```txt
+Authorization, User-Email, Content-Type, Accept, X-Target-User-Id
+```
+
+## Integration Notes
+
+When building a portfolio integration:
+
+- send the API key as a bearer token
+- handle `401` responses by checking the key value and request header
+- handle missing optional fields in the UI
+- avoid assuming every array has items
+- decide whether your portfolio should fetch fresh data on every request or cache it
+- rotate keys if they are exposed in a public repository

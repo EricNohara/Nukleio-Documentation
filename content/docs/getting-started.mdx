@@ -1,0 +1,310 @@
+﻿---
+title: Getting Started
+description: Set up your Nukleio account and prepare your portfolio content for a connected website.
+---
+
+import { Tabs } from "nextra/components";
+
+# Getting Started
+
+This guide walks you through the first steps for using Nukleio as the content manager for your portfolio website.
+
+By the end, you should have a Nukleio account with basic profile information, at least one project, uploaded portfolio assets, and an API key that your portfolio website can use to request your public data.
+
+## 1. Create Your Account
+
+To get started, navigate to the [sign up page](https://www.nukleio.com/user/signup) and create a Nukleio account or [sign in](https://www.nukleio.com/user/login) with an existing one.
+
+Nukleio supports both email/password authentication and OAuth sign-in through several popular providers:
+
+- GitHub
+- GitLab
+- LinkedIn
+- Google
+- Microsoft
+
+Using OAuth lets you sign in with an existing account, so you don't have to create and manage a separate password for Nukleio. Additionally, some of your basic data will be automatically set in your new account.
+
+After signing in for the first time, you'll be taken to your dashboard. This is where you'll manage all of the information that powers your portfolio, including your profile, projects, files, social links, and API keys.
+
+> **Tip**: If you're already active on GitHub, GitLab, LinkedIn, Google, or Microsoft, signing in with one of those providers is the quickest way to get started.
+
+## 2. Complete Your Profile
+
+Your profile is the foundation of your portfolio data. Navigate to the [user info page](https://www.nukleio.com/user/userInfo) and add the information you want connected portfolio sites to use.
+
+Useful profile fields include:
+
+- full name
+- email address
+- phone number
+- current role or position
+- current company
+- location or address
+- short bio
+- GitHub profile URL
+- LinkedIn profile URL
+- other social links
+
+You do not need to fill out every field immediately. Start with the information your current portfolio design needs, then return later as your portfolio grows.
+
+## 3. Upload Core Files and Images
+
+Next, navigate to the [documents page](https://www.nukleio.com/user/documents) and upload the assets that should be available to your portfolio.
+
+Common assets include:
+
+- portrait or profile image
+- resume
+- transcript
+- project thumbnails
+
+These files are stored through Nukleio so your portfolio can reference the latest uploaded versions instead of relying on manually managed files inside your portfolio codebase.
+
+## 4. Add Your First Project
+
+Projects are one of the most important parts of a developer portfolio. In Nukleio, a project can include both descriptive content and structured technical metadata. Navigate to the [projects page](https://www.nukleio.com/user/projects) and add your first project.
+
+For each project, you can add details such as:
+
+- project name
+- start and end dates
+- project description
+- GitHub repository URL
+- live demo URL
+- programming languages used
+- frameworks used
+- technologies used
+- project thumbnail image
+
+Write project descriptions for portfolio visitors, not just for yourself. A useful description usually explains what the project does, why you built it, what technologies were involved, and what problem it solves.
+
+## 5. Review Your Public Portfolio Data
+
+Before connecting a portfolio website, review the content you have added in Nukleio.
+
+Check that:
+
+- your profile information is accurate
+- links open the correct destinations
+- project descriptions are clear
+- project dates are correct
+- uploaded files are the current versions
+- thumbnails and images represent each project well
+
+This review matters because your connected portfolio will use this content as its source of truth.
+
+## 6. Create an API Key
+
+An API key allows your portfolio website to request your public Nukleio data.
+
+Navigate to the [API keys page](https://www.nukleio.com/user/connect) and create an API key. A key should only be used for a single application. Use a clear description so you can remember what the key is for later, such as:
+
+- Personal Portfolio
+- Portfolio Redesign
+- Resume Site
+- Testing Integration
+
+After creating a key, store it somewhere safe. Your portfolio integration will use it when requesting your Nukleio data.
+
+## 7. Connect Your Portfolio Website
+
+Once you have an API key, your portfolio website can request your public data from Nukleio.
+
+The public endpoint for retrieving your portfolio data is:
+
+```http
+GET /api/public/getUserData
+```
+
+Your API key must be included in the `Authorization` header as a Bearer token.
+
+<Tabs items={["fetch", "Axios", "cURL", "HTTP", "Python", "C#", "Go", "PHP"]}>
+  <Tabs.Tab>
+
+```ts filename="fetch"
+const response = await fetch("https://nukleio.com/api/public/getUserData", {
+  headers: {
+    Authorization: "Bearer YOUR_API_KEY",
+  },
+});
+
+const data = await response.json();
+console.log(data);
+```
+
+  </Tabs.Tab>
+
+  <Tabs.Tab>
+
+```ts filename="Axios"
+import axios from "axios";
+
+const { data } = await axios.get("https://nukleio.com/api/public/getUserData", {
+  headers: {
+    Authorization: "Bearer YOUR_API_KEY",
+  },
+});
+
+console.log(data);
+```
+
+  </Tabs.Tab>
+
+  <Tabs.Tab>
+
+```bash filename="cURL"
+curl https://nukleio.com/api/public/getUserData \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+  </Tabs.Tab>
+
+  <Tabs.Tab>
+
+```http filename="HTTP"
+GET /api/public/getUserData HTTP/1.1
+Host: nukleio.com
+Authorization: Bearer YOUR_API_KEY
+```
+
+  </Tabs.Tab>
+
+  <Tabs.Tab>
+
+```python filename="Python (requests)"
+import requests
+
+response = requests.get(
+    "https://nukleio.com/api/public/getUserData",
+    headers={
+        "Authorization": "Bearer YOUR_API_KEY"
+    }
+)
+
+print(response.json())
+```
+
+  </Tabs.Tab>
+
+  <Tabs.Tab>
+
+```csharp filename="C# (.NET)"
+using System.Net.Http.Headers;
+
+using var client = new HttpClient();
+
+client.DefaultRequestHeaders.Authorization =
+    new AuthenticationHeaderValue("Bearer", "YOUR_API_KEY");
+
+var response = await client.GetAsync(
+    "https://nukleio.com/api/public/getUserData"
+);
+
+var json = await response.Content.ReadAsStringAsync();
+
+Console.WriteLine(json);
+```
+
+  </Tabs.Tab>
+
+  <Tabs.Tab>
+
+```go filename="Go"
+package main
+
+import (
+    "fmt"
+    "io"
+    "net/http"
+)
+
+func main() {
+    req, _ := http.NewRequest(
+        "GET",
+        "https://nukleio.com/api/public/getUserData",
+        nil,
+    )
+
+    req.Header.Set("Authorization", "Bearer YOUR_API_KEY")
+
+    client := &http.Client{}
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+
+    body, _ := io.ReadAll(res.Body)
+
+    fmt.Println(string(body))
+}
+```
+
+  </Tabs.Tab>
+
+  <Tabs.Tab>
+
+```php filename="PHP"
+<?php
+
+$ch = curl_init("https://nukleio.com/api/public/getUserData");
+
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    "Authorization: Bearer YOUR_API_KEY"
+]);
+
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+$response = curl_exec($ch);
+
+curl_close($ch);
+
+echo $response;
+```
+
+  </Tabs.Tab>
+</Tabs>
+
+The response contains your public portfolio information as JSON. Your portfolio frontend can use that data to render sections such as your hero, bio, project cards, technology lists, social links, and resume link.
+
+## 8. Make a Test Update
+
+After your portfolio is connected, make a small test update in Nukleio.
+
+For example:
+
+- change one sentence in your bio
+- update a project description
+- add a new technology to a project
+- replace a project thumbnail
+
+Then refresh your portfolio site. Confirm that the updated Nukleio content appears correctly.
+
+## 9. Keep Nukleio as Your Source of Truth
+
+After setup, use Nukleio whenever your portfolio content changes.
+
+Good times to update Nukleio include:
+
+- finishing a new project
+- changing jobs or roles
+- updating your resume
+- adding a new live demo link
+- improving project descriptions
+- changing social or contact links
+- replacing old screenshots or thumbnails
+
+Keeping Nukleio current means your connected portfolio sites can stay current too.
+
+## Setup Checklist
+
+Use this checklist to confirm your account is ready:
+
+- [x] Account created
+- [x] Profile information added
+- [x] Social and professional links added
+- [x] Resume or other files uploaded
+- [x] Portrait or profile image uploaded
+- [x] At least one project added
+- [x] Project thumbnail uploaded
+- [x] API key created
+- [x] Portfolio website connected
+- [x] Test update confirmed

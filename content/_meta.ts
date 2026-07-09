@@ -1,4 +1,6 @@
-export default {
+﻿export default {
   index: "Introduction",
-  "getting-started": "Getting Started",
+  product: "Product",
+  pricing: "Pricing",
+  docs: "Docs",
 };

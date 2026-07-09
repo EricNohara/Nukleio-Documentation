@@ -1,0 +1,161 @@
+﻿---
+title: Troubleshooting
+description: Fix common Nukleio dashboard, upload, API key, and portfolio integration issues.
+---
+
+# Troubleshooting
+
+Use this page when Nukleio content is not saving, files are not updating, API requests are failing, or your connected portfolio is not showing the latest data.
+
+## My Portfolio Is Not Showing Updated Content
+
+First, confirm the content was saved in Nukleio.
+
+Check that:
+
+- the profile, project, file, or link update appears in the dashboard
+- you clicked the final save button after selecting files or editing forms
+- the connected portfolio is requesting data from the correct Nukleio environment
+- the portfolio is using the correct API key
+
+If the dashboard looks correct, the issue is often caching.
+
+Your portfolio may:
+
+- cache API responses in the browser
+- cache data on the server
+- use a static build that needs to be rebuilt
+- fetch data only at deployment time
+- use stale environment variables
+
+Refresh the page, clear cache, redeploy, or rebuild depending on how your portfolio is built.
+
+## API Request Returns 401 Unauthorized
+
+A `401` response means Nukleio could not authorize the request.
+
+Common causes:
+
+- missing `Authorization` header
+- API key was copied incorrectly
+- API key was removed or rotated
+- request is not using the `Bearer` format
+- wrong environment variable is being used
+- key is being sent with extra spaces or quotes
+
+The header should look like this:
+
+```txt
+Authorization: Bearer YOUR_API_KEY
+```
+
+If the key was exposed publicly, create a new key, update your portfolio, and remove the old key.
+
+## API Request Says Invalid API Key Format
+
+This usually means the value sent to Nukleio is not a complete Nukleio API key.
+
+Check that:
+
+- the key starts with `nk_live_`
+- the entire key was copied
+- your environment variable is loading correctly
+- your code is not sending the variable name instead of the variable value
+- no extra quotation marks are included in the actual header value
+
+## Uploaded File Does Not Appear
+
+If a file or image does not appear in your portfolio:
+
+1. Confirm the file was selected in the upload box.
+2. Confirm you saved the form or page after selecting it.
+3. Check whether the dashboard shows the new file or preview.
+4. Refresh your connected portfolio.
+5. Clear cache or rebuild if your portfolio stores old API responses.
+
+For project thumbnails, also confirm that the thumbnail was saved with the correct project.
+
+## Image Looks Wrong in the Portfolio
+
+If an image appears cropped, stretched, blurry, or too small, the issue may be the portfolio layout rather than the upload itself.
+
+Try these fixes:
+
+- upload a higher-resolution image
+- use a more consistent aspect ratio
+- crop the image before uploading
+- avoid screenshots with tiny text
+- check the portfolio CSS for image sizing behavior
+
+Nukleio stores the image, but your portfolio controls how it is displayed.
+
+## Project Is Missing Information
+
+If a project appears without a link, date, image, or technology list, check the project record in Nukleio.
+
+Make sure:
+
+- optional fields were actually filled in
+- the project was saved after editing
+- technologies were selected in the correct category
+- the portfolio frontend supports that field
+- the portfolio handles empty fields intentionally
+
+Some portfolios intentionally hide empty fields. For example, a project with no demo URL may not show a demo button.
+
+## Dashboard Charts Look Empty
+
+Dashboard charts depend on API request activity.
+
+If the charts are empty, it may mean:
+
+- no portfolio has requested data yet
+- the portfolio is using a key that has not logged activity
+- requests are being blocked before reaching Nukleio
+- you are viewing the dashboard before activity has accumulated
+
+After connecting a portfolio, load the portfolio and refresh the dashboard.
+
+## Portfolio Works Locally But Not After Deployment
+
+This is usually an environment variable or deployment configuration issue.
+
+Check that:
+
+- the deployed site has the Nukleio API key configured
+- the deployed site uses the correct Nukleio base URL
+- environment variables were added to the correct deployment environment
+- the site was redeployed after changing environment variables
+- server-side code can access the variable at runtime
+
+Many hosting platforms require a redeploy before new environment variables take effect.
+
+## Portfolio Works After Refresh But Not Immediately
+
+Your portfolio may be caching Nukleio data.
+
+Check whether the portfolio:
+
+- fetches at build time
+- uses incremental static regeneration
+- stores API responses in local state
+- caches requests in a server function
+- uses a CDN cache
+
+Choose a caching strategy that matches how often you expect portfolio content to change.
+
+## General Debugging Checklist
+
+When something does not work, check in this order:
+
+1. Is the content correct in Nukleio?
+2. Was the change saved?
+3. Is the portfolio using the correct API key?
+4. Is the API key sent as a bearer token?
+5. Does the API request return `200`?
+6. Does the JSON response include the expected data?
+7. Does the portfolio code render that field?
+8. Is caching hiding the update?
+9. Does the deployed environment match local development?
+
+Working through the issue in this order usually shows whether the problem is in Nukleio content, API authentication, the portfolio frontend, or deployment caching.
