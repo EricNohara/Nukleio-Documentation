@@ -24,7 +24,7 @@ export default async function RootLayout({
           navbar={navbar}
           pageMap={await getPageMap()}
           footer={footer}
-          docsRepositoryBase="https://github.com/EricNohara/Nukleio"
+          docsRepositoryBase="https://github.com/EricNohara/Nukleio-Documentation/"
         >
           {children}
         </Layout>

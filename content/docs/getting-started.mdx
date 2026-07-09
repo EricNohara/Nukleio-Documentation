@@ -1,0 +1,160 @@
+﻿---
+title: Getting Started
+description: Set up your Nukleio account and prepare your portfolio content for a connected website.
+---
+
+# Getting Started
+
+This guide walks you through the first steps for using Nukleio as the content manager for your portfolio website.
+
+By the end, you should have a Nukleio account with basic profile information, at least one project, uploaded portfolio assets, and an API key that your portfolio website can use to request your public data.
+
+## 1. Create Your Account
+
+Start by creating a Nukleio account or signing in to an existing one.
+
+After signing in, Nukleio takes you to your user dashboard. The dashboard is where you manage the information your portfolio can display, including your profile, projects, files, links, and API keys.
+
+## 2. Complete Your Profile
+
+Your profile is the foundation of your portfolio data. Add the information you want connected portfolio sites to use.
+
+Useful profile fields include:
+
+- full name
+- email address
+- phone number
+- current role or position
+- current company
+- location or address
+- short bio
+- GitHub profile URL
+- LinkedIn profile URL
+- other social links
+
+You do not need to fill out every field immediately. Start with the information your current portfolio design needs, then return later as your portfolio grows.
+
+## 3. Upload Core Files and Images
+
+Next, upload the assets that should be available to your portfolio.
+
+Common assets include:
+
+- portrait or profile image
+- resume
+- transcript
+- project thumbnails
+
+These files are stored through Nukleio so your portfolio can reference the latest uploaded versions instead of relying on manually managed files inside your portfolio codebase.
+
+## 4. Add Your First Project
+
+Projects are one of the most important parts of a developer portfolio. In Nukleio, a project can include both descriptive content and structured technical metadata.
+
+For each project, you can add details such as:
+
+- project name
+- start and end dates
+- project description
+- GitHub repository URL
+- live demo URL
+- programming languages used
+- frameworks used
+- technologies used
+- project thumbnail image
+
+Write project descriptions for portfolio visitors, not just for yourself. A useful description usually explains what the project does, why you built it, what technologies were involved, and what problem it solves.
+
+## 5. Review Your Public Portfolio Data
+
+Before connecting a portfolio website, review the content you have added in Nukleio.
+
+Check that:
+
+- your profile information is accurate
+- links open the correct destinations
+- project descriptions are clear
+- project dates are correct
+- uploaded files are the current versions
+- thumbnails and images represent each project well
+
+This review matters because your connected portfolio will use this content as its source of truth.
+
+## 6. Create an API Key
+
+An API key allows your portfolio website to request your public Nukleio data.
+
+Create an API key from the API key area of your dashboard. Use a clear description so you can remember what the key is for later, such as:
+
+- Personal Portfolio
+- Portfolio Redesign
+- Resume Site
+- Testing Integration
+
+After creating a key, store it somewhere safe. Your portfolio integration will use it when requesting your Nukleio data.
+
+## 7. Connect Your Portfolio Website
+
+Once you have an API key, your portfolio website can request your public data from Nukleio.
+
+The main public data endpoint is:
+
+```txt
+GET /api/public/getUserData
+```
+
+Your portfolio should send the API key in the `Authorization` header as a bearer token.
+
+```txt
+Authorization: Bearer YOUR_API_KEY
+```
+
+The response contains your public portfolio information as JSON. Your portfolio frontend can use that data to render sections such as your hero, bio, project cards, technology lists, social links, and resume link.
+
+## 8. Make a Test Update
+
+After your portfolio is connected, make a small test update in Nukleio.
+
+For example:
+
+- change one sentence in your bio
+- update a project description
+- add a new technology to a project
+- replace a project thumbnail
+
+Then refresh or rebuild your portfolio depending on how your site fetches data. Confirm that the updated Nukleio content appears correctly.
+
+## 9. Keep Nukleio as Your Source of Truth
+
+After setup, use Nukleio whenever your portfolio content changes.
+
+Good times to update Nukleio include:
+
+- finishing a new project
+- changing jobs or roles
+- updating your resume
+- adding a new live demo link
+- improving project descriptions
+- changing social or contact links
+- replacing old screenshots or thumbnails
+
+Keeping Nukleio current means your connected portfolio sites can stay current too.
+
+## Setup Checklist
+
+Use this checklist to confirm your account is ready:
+
+- Account created
+- Profile information added
+- Social and professional links added
+- Resume or other files uploaded
+- Portrait or profile image uploaded
+- At least one project added
+- Project thumbnail uploaded
+- API key created
+- Portfolio website connected
+- Test update confirmed
+
+## Next Step
+
+Continue to Account and Dashboard Overview to learn where each major Nukleio feature lives and how the dashboard is organized.

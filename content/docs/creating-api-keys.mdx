@@ -1,0 +1,103 @@
+﻿---
+title: Creating API Keys
+description: Create, identify, and manage the API keys used by connected portfolio websites.
+---
+
+# Creating API Keys
+
+API keys let portfolio websites request your public Nukleio data. Without an API key, a portfolio site should not be able to access your portfolio data from the public API.
+
+Create one key for each major integration so you can understand which site or environment is making requests.
+
+## When to Create an API Key
+
+Create an API key when you want to connect Nukleio to:
+
+- your main portfolio website
+- a portfolio redesign
+- a local development version of your portfolio
+- a resume-focused website
+- another site that needs your public portfolio data
+
+Using separate keys for separate integrations makes your dashboard activity easier to understand.
+
+## Naming API Keys
+
+When creating a key, use a description that identifies where the key will be used.
+
+Good examples:
+
+- Main Portfolio
+- Portfolio Local Development
+- Portfolio Redesign
+- Resume Site
+- Personal Website
+
+Avoid vague names like `test`, `new key`, or `website` if you expect to have more than one key later.
+
+## Creating a Key
+
+To create an API key:
+
+1. Open the API key area of your dashboard.
+2. Choose the option to create a new key.
+3. Enter a clear description.
+4. Create the key.
+5. Copy the key value when it is shown.
+6. Store it securely for your portfolio integration.
+
+Nukleio API keys use an `nk_live_` prefix. Treat the full key as sensitive because it allows a connected client to request your public portfolio data.
+
+## Storing a Key
+
+Store API keys in the safest place your portfolio setup supports.
+
+For many portfolio projects, that means using an environment variable rather than hardcoding the key throughout the codebase.
+
+Example environment variable name:
+
+```txt
+NUKLEIO_API_KEY=your_api_key_here
+```
+
+Do not commit API keys to a public repository. If a key is exposed, rotate it by creating a new key, updating your portfolio, and removing the exposed key.
+
+## Using a Key
+
+A connected portfolio sends the key in the `Authorization` header as a bearer token.
+
+```txt
+Authorization: Bearer YOUR_API_KEY
+```
+
+The public API validates the key before returning portfolio data.
+
+## Monitoring Key Usage
+
+Dashboard analytics can help you understand how API keys are being used.
+
+For example, top connection views can show which keys are making requests most often. Availability and recent activity views can help you identify failed requests or unexpected traffic changes.
+
+Use this information to confirm that your portfolio is connected and that old keys are not still being used.
+
+## Rotating or Removing Keys
+
+Rotate or remove a key when:
+
+- it was exposed publicly
+- it belongs to an old portfolio version
+- you no longer recognize its description
+- a test integration is finished
+- you want to separate production and development usage
+
+After removing or replacing a key, update any portfolio site that depended on it. Otherwise, requests from that portfolio will fail authorization.
+
+## API Key Checklist
+
+Before connecting your portfolio, confirm that:
+
+- the key has a clear description
+- the full key was copied correctly
+- the key is stored outside public source code
+- the portfolio sends it as a bearer token
+- old or unused keys are removed when no longer needed

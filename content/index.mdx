@@ -1,117 +1,130 @@
----
+﻿---
 title: Introduction
-description: Welcome to the Nukleio documentation.
+description: Learn what Nukleio does and how to use it to manage your portfolio content.
 ---
 
-# Welcome to Nukleio
+# Introduction
 
-Nukleio is a platform for managing the content that powers your portfolio website from a single location.
+Nukleio helps you manage the content behind your portfolio website from one place. Instead of editing code every time you want to update your bio, projects, links, resume, or images, you can make those changes in Nukleio and let your connected portfolio site fetch the latest version.
 
-Instead of hardcoding project information, experience, education, resumes, images, and other portfolio data directly into your website, Nukleio stores everything in one centralized backend and exposes it through a simple API. Your portfolio becomes a client that consumes this data, allowing updates to appear immediately without modifying or redeploying your website.
+Think of Nukleio as the control center for your developer portfolio. Your portfolio website still controls how everything looks, but Nukleio controls the information it displays.
 
----
+## What You Can Do With Nukleio
 
-## Why Nukleio?
+Use Nukleio to keep your portfolio content organized, current, and reusable across connected sites.
 
-Keeping a portfolio up to date is often tedious:
+You can manage:
 
-- Every change requires editing source code.
-- Multiple portfolio sites must each be updated individually.
-- Images and documents have to be manually replaced.
-- APIs and backend services need to be recreated for every new project.
+- your profile information, including name, bio, location, role, and company
+- social and professional links such as GitHub, LinkedIn, Instagram, Facebook, and X
+- portfolio projects with descriptions, dates, GitHub links, demo links, languages, frameworks, technologies, and thumbnail images
+- portfolio files such as your resume, transcript, portrait, and project images
+- API keys used by your portfolio website to securely request your public portfolio data
 
-Nukleio solves this by separating your **content** from your **presentation**.
+When you update content in Nukleio, your connected portfolio can display the updated information without requiring you to manually edit and redeploy the portfolio frontend.
 
-Update your information once, and every connected portfolio can immediately access the latest version.
+## Why Use Nukleio?
 
----
+Nowadays, software developers are constantly gaining new skills, building new projects, and learning new things. Keeping your portfolio website up to date with your latest information can become a tedious chore.
 
-## Core Features
+A portfolio is easier to maintain when content and design are separate.
 
-- 🚀 Centralized portfolio management
-- 📂 File storage for resumes, transcripts, portraits, and project images
-- 🔐 Secure authentication with Supabase
-- 🌐 Public API for portfolio integrations
-- 💳 Stripe payment support
-- 🤖 AI-powered features (coming soon)
-- ⚡ Built with Next.js and Supabase
-- 📈 Designed for scalability and performance
+Without Nukleio, updating a portfolio often means opening the codebase, finding the right component or data file, changing text or image paths, rebuilding the site, and redeploying. Not to mention, if it's been awhile since you last looked at your site, you may need to relearn how you implemented it. If your initial implementation was not scalable, a simple data update can turn into a multi-day chore. That works, but it becomes repetitive as your projects, roles, links, and documents change over time.
 
----
+With Nukleio, you update your portfolio data through a dashboard. Your website then retrieves that data from Nukleio's public API and renders it in your own design.
 
-## Architecture
+This is useful if you:
 
-At a high level, Nukleio consists of four components:
+- want a portfolio that is easier to update over time
+- have multiple portfolio versions or experiments that should share the same data
+- want to keep project details, files, and links in one organized place
+- prefer changing portfolio content from a web dashboard instead of source code
+- want your portfolio frontend to focus on presentation instead of data management
+- want to view metrics on your portfolio's traffic easily
 
-```text
-Portfolio Website
-        │
-        ▼
-  Nukleio Public API
-        │
-        ▼
- Next.js Backend
-        │
-        ▼
-    Supabase
-(Database + Auth + Storage)
+## How Nukleio Works
+
+Nukleio has two main parts: the dashboard and the public API.
+
+### Dashboard
+
+The dashboard is where you sign in and manage your portfolio content. This is the primary place you will add, edit, upload, and organize information.
+
+Common dashboard tasks include:
+
+- updating your basic profile details
+- adding or editing projects
+- uploading a portrait, resume, transcript, or project thumbnail
+- entering links for GitHub, LinkedIn, demos, and social profiles
+- choosing the languages, frameworks, and technologies used in each project
+- creating and managing API keys for connected portfolio sites
+- utilizing generative AI tools for optimized custom cover letter, resume, and professional headshot generation
+
+### Public API
+
+The public API lets your portfolio website request your Nukleio data. A connected portfolio sends an API request using your API key, and Nukleio returns your public portfolio information as JSON.
+
+Your portfolio can then use that response to render sections such as:
+
+- hero profile content
+- about or bio sections
+- project galleries
+- technology lists
+- resume or transcript links
+- contact and social links
+
+You do not need to expose your database or manually copy data into your portfolio project. Nukleio acts as the source of truth, and your portfolio consumes the approved public data.
+
+## Typical Workflow
+
+```mermaid
+flowchart LR
+    A[Update portfolio content] --> B[Save changes]
+    B --> C[Portfolio requests latest data]
+    C --> D[Portfolio displays latest data]
 ```
 
-Your portfolio never needs direct database access. Instead, it communicates with the public API, which securely retrieves the appropriate data from Supabase.
+In practice, this means you can make a portfolio update once in Nukleio and have the connected site use the latest data instantly.
 
----
+## Who Nukleio Is For
 
-## Who is Nukleio for?
+Nukleio is built for developers who want a cleaner way to maintain portfolio content.
 
-Nukleio is designed for developers who:
+It is especially helpful for:
 
-- maintain one or more portfolio websites
-- want to separate content from frontend code
-- want a reusable backend across multiple portfolio projects
-- prefer managing portfolio data through an intuitive dashboard instead of editing source files
+- students building a first technical portfolio
+- job seekers who update projects, resumes, and links often
+- developers who maintain more than one portfolio site
+- designers or frontend developers who want portfolio data separate from the UI
+- anyone who wants a reusable portfolio backend without building one from scratch
 
----
+## What This Documentation Covers
 
-## Technology Stack
+These docs are for Nukleio users and customers. They explain how to use the product, manage your content, and connect a portfolio website to your Nukleio account.
 
-| Component      | Technology         |
-| -------------- | ------------------ |
-| Frontend       | Next.js            |
-| Backend        | Next.js App Router |
-| Database       | Supabase           |
-| Authentication | Supabase Auth      |
-| Storage        | Supabase Storage   |
-| Payments       | Stripe             |
-| AI             | OpenAI API         |
-| Hosting        | Vercel             |
-| Scheduled Jobs | AWS Lambda         |
-
----
-
-## Documentation Guide
-
-If you're new to Nukleio, the recommended reading order is:
+Recommended reading order:
 
 1. Getting Started
-2. Installation
-3. Environment Variables
-4. Supabase Setup
-5. Authentication
-6. API Reference
-7. Deployment
+2. Account and Dashboard Overview
+3. Managing Profile Information
+4. Managing Projects
+5. Uploading Files and Images
+6. Creating API Keys
+7. Connecting a Portfolio Website
+8. Public API Reference
+9. Troubleshooting
 
----
+## Key Terms
 
-## Project Goals
+| Term           | Meaning                                                                             |
+| -------------- | ----------------------------------------------------------------------------------- |
+| Dashboard      | The Nukleio web app where you manage portfolio content.                             |
+| Portfolio site | The website that displays your portfolio to visitors.                               |
+| Public API     | The Nukleio API your portfolio uses to request public portfolio data.               |
+| API key        | A key that allows a portfolio site to request your approved Nukleio data.           |
+| Project        | A portfolio item with details such as description, links, technologies, and images. |
+| Asset          | A file managed in Nukleio, such as a resume, transcript, portrait, or thumbnail.    |
 
-The long-term vision for Nukleio is to provide a complete platform for managing developer portfolios, including:
+## Next Step
 
-- portfolio content management
-- public API integrations
-- AI-assisted content generation
-- customizable templates
-- premium features and marketplace integrations
-
----
-
-Continue to **Getting Started** to install and configure your first Nukleio instance.
+Continue to Getting Started to create your account, complete your profile, and prepare your first portfolio integration.
