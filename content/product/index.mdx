@@ -61,11 +61,11 @@ The resume agent generates resume files from your Nukleio data.
 It supports two generation modes:
 
 - standard resume generation from selected profile, education, experience, course, project, and skill records
-- AI-enhanced resume generation that can choose and improve relevant user information for target job types
+- AI-enhanced resume generation that can choose and improve relevant user information to include in your resume to optimize for a specific job type
 
-The resume agent renders the selected resume template, generates a PDF, uploads it to storage, and returns a resume URL.
+The resume agent renders generates a PDF, uploads it to storage, and returns a public resume URL.
 
-Use it when you want to quickly create a polished resume from the content you already maintain in Nukleio.
+Use it when you want to quickly create a polished and optimized resume from the content you already maintain in Nukleio.
 
 ### Cover Letter Agent
 
@@ -75,7 +75,7 @@ The workflow can use:
 
 - job title
 - company name
-- pasted job description
+- a pasted job description
 - your Nukleio portfolio data
 - an optional writing sample
 - user feedback for revisions
@@ -84,7 +84,7 @@ Behind the scenes, the cover letter workflow includes agents for job research, w
 
 Generated cover letters can be cached, revised, scored against the job, previewed as PDFs, and reused later.
 
-Use it when you want a cover letter that reflects both the job posting and your actual Nukleio profile, projects, skills, education, and experience.
+Use it when you want a cover letter that reflects the requirements of a job posting, your writing style, and your actual profile content you already maintain in Nukleio.
 
 ### Professional Headshot Agent
 
@@ -99,11 +99,11 @@ It can use:
 - output layout selection
 - revision feedback
 
-Before generation, the agent validates whether the reference photo is suitable. If the photo passes validation, Nukleio generates the headshot, uploads it to storage, and returns a public URL.
+Before generation, the agent validates whether the reference photo is suitable and appropriate. If the photo passes validation, Nukleio generates the headshot, uploads it to storage, and returns a public URL.
 
 Supported attire options include automatic selection, business, business casual, smart casual, casual, tech professional, and academic.
 
-Use it when you need a cleaner profile image for your portfolio without manually arranging a new photo session.
+Use it when you need a cleaner profile image with a high level of customization for your portfolio without manually arranging a new photo session with a professional photographer.
 
 ## Billing and Plans
 
@@ -119,25 +119,22 @@ See Pricing for the current feature breakdown.
 
 ## How Product Areas Fit Together
 
-```txt
-Dashboard content
-      |
-      v
-Portfolio API and uploaded assets
-      |
-      v
-Connected portfolio website
-      |
-      v
-Analytics and API key monitoring
+```mermaid
+flowchart LR
+    A[Your Data in Nukleio]
 
-Nukleio profile data
-      |
-      v
-Resume, cover letter, and headshot AI agents
-      |
-      v
-Job-search ready professional materials
+    A --> B[Dashboard]
+    A --> C[Portfolio API]
+    A --> D[AI Tools]
+
+    C --> E[Connected Portfolio Website]
+
+    D --> F[Resume Generator]
+    D --> G[Cover Letter Generator]
+    D --> H[Headshot Generator]
+
+    C --> I[API Monitoring]
+    E --> J[Portfolio Analytics]
 ```
 
 The core idea is simple: keep your portfolio and professional materials connected to the same organized source of truth.
@@ -145,5 +142,5 @@ The core idea is simple: keep your portfolio and professional materials connecte
 ## Next Steps
 
 - Read Docs to set up your account and connect a portfolio.
-- Read Pricing to compare plan features.
+- Read Pricing to compare plan pricing and features.
 - Start with Getting Started if you are using Nukleio for the first time.
