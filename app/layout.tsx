@@ -4,13 +4,22 @@ import { Analytics } from "@vercel/analytics/next";
 import { Head } from "nextra/components";
 import { getPageMap } from "nextra/page-map";
 import { Footer, Layout, Navbar } from "nextra-theme-docs";
+import { Suspense } from "react";
+
+import { ReturnToNukleio } from "./components/ReturnToNukleio";
 
 export const metadata = {
   title: "Nukleio Documentation",
   description: "Documentation for Nukleio",
 };
 
-const navbar = <Navbar logo={<b>Nukleio Documentation</b>} />;
+const navbar = (
+  <Navbar logo={<b>Nukleio Documentation</b>}>
+    <Suspense fallback={null}>
+      <ReturnToNukleio />
+    </Suspense>
+  </Navbar>
+);
 const footer = <Footer>© 2026 Nukleio Docs</Footer>;
 
 export default async function RootLayout({

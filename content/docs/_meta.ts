@@ -1,12 +1,12 @@
 ﻿export default {
   index: "Docs Overview",
   "getting-started": "Getting Started",
-  "account-dashboard-overview": "Account and Dashboard Overview",
-  "managing-profile-information": "Managing Profile Information",
+  "dashboard-overview": "Dashboard Overview",
+  "managing-profile": "Managing Profile",
   "managing-projects": "Managing Projects",
-  "uploading-files-and-images": "Uploading Files and Images",
+  "files-and-images": "Files and Images",
   "creating-api-keys": "Creating API Keys",
-  "connecting-a-portfolio-website": "Connecting a Portfolio Website",
+  "connecting-a-portfolio": "Connecting a Portfolio",
   "public-api-reference": "Public API Reference",
   troubleshooting: "Troubleshooting",
 };
