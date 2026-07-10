@@ -1,7 +1,9 @@
-import { Footer, Layout, Navbar } from "nextra-theme-docs";
+import "nextra-theme-docs/style.css";
+
+import { Analytics } from "@vercel/analytics/next";
 import { Head } from "nextra/components";
 import { getPageMap } from "nextra/page-map";
-import "nextra-theme-docs/style.css";
+import { Footer, Layout, Navbar } from "nextra-theme-docs";
 
 export const metadata = {
   title: "Nukleio Documentation",
@@ -27,6 +29,7 @@ export default async function RootLayout({
           docsRepositoryBase="https://github.com/EricNohara/Nukleio-Documentation/"
         >
           {children}
+          <Analytics />
         </Layout>
       </body>
     </html>
