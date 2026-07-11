@@ -3,44 +3,81 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
-const APP_ORIGIN =
+const DEFAULT_APP_URL =
   process.env.NEXT_PUBLIC_NUKLEIO_APP_URL ?? "http://localhost:3000";
 
 const STORAGE_KEY = "nukleio-docs-return-to";
 
-function isSafeInternalPath(value: string): boolean {
-  return value.startsWith("/") && !value.startsWith("//");
+function normalizeOrigin(value: string): string | null {
+  try {
+    return new URL(value).origin;
+  } catch {
+    return null;
+  }
+}
+
+function isAllowedReturnUrl(value: string): boolean {
+  try {
+    const url = new URL(value);
+
+    if (url.protocol !== "http:" && url.protocol !== "https:") {
+      return false;
+    }
+
+    // Allow any localhost port during development.
+    if (
+      url.hostname === "localhost" ||
+      url.hostname === "127.0.0.1"
+    ) {
+      return true;
+    }
+
+    // Only allow the configured Nukleio origin when deployed.
+    const configuredOrigin = normalizeOrigin(DEFAULT_APP_URL);
+
+    return configuredOrigin !== null && url.origin === configuredOrigin;
+  } catch {
+    return false;
+  }
 }
 
 export function ReturnToNukleio() {
   const searchParams = useSearchParams();
-  const requestedPath = searchParams.get("returnTo");
+  const requestedUrl = searchParams.get("returnTo");
 
-  const safeRequestedPath =
-    requestedPath && isSafeInternalPath(requestedPath) ? requestedPath : null;
+  const safeRequestedUrl =
+    requestedUrl && isAllowedReturnUrl(requestedUrl)
+      ? requestedUrl
+      : null;
 
   useEffect(() => {
-    if (safeRequestedPath) {
-      sessionStorage.setItem(STORAGE_KEY, safeRequestedPath);
+    if (safeRequestedUrl) {
+      sessionStorage.setItem(STORAGE_KEY, safeRequestedUrl);
     }
-  }, [safeRequestedPath]);
+  }, [safeRequestedUrl]);
 
   function getReturnUrl(): string {
-    const storedPath = sessionStorage.getItem(STORAGE_KEY);
+    if (safeRequestedUrl) {
+      return safeRequestedUrl;
+    }
 
-    const returnPath =
-      safeRequestedPath ??
-      (storedPath && isSafeInternalPath(storedPath) ? storedPath : "/");
+    const storedUrl = sessionStorage.getItem(STORAGE_KEY);
 
-    return new URL(returnPath, APP_ORIGIN).toString();
+    if (storedUrl && isAllowedReturnUrl(storedUrl)) {
+      return storedUrl;
+    }
+
+    sessionStorage.removeItem(STORAGE_KEY);
+
+    return DEFAULT_APP_URL;
   }
 
   return (
     <a
-      href={new URL(safeRequestedPath ?? "/", APP_ORIGIN).toString()}
+      href={safeRequestedUrl ?? DEFAULT_APP_URL}
       onClick={(event) => {
         event.preventDefault();
-        window.location.href = getReturnUrl();
+        window.location.assign(getReturnUrl());
       }}
       className="nextra-focus x:group x:inline-flex x:items-center x:gap-1.5 x:rounded-md x:px-2 x:py-1.5 x:text-sm x:font-medium x:transition-colors x:hover:bg-gray-100 x:dark:hover:bg-neutral-800"
       aria-label="Return to Nukleio"
