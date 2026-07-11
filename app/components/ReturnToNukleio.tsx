@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const DEFAULT_APP_URL =
   process.env.NEXT_PUBLIC_NUKLEIO_APP_URL ?? "http://localhost:3000";
@@ -24,7 +24,7 @@ function isAllowedReturnUrl(value: string): boolean {
       return false;
     }
 
-    // Allow any local development port.
+    // Allow any localhost port during development.
     if (
       url.hostname === "localhost" ||
       url.hostname === "127.0.0.1"
@@ -32,7 +32,7 @@ function isAllowedReturnUrl(value: string): boolean {
       return true;
     }
 
-    // In deployed environments, only allow the configured Nukleio origin.
+    // Only allow the configured Nukleio origin when deployed.
     const configuredOrigin = normalizeOrigin(DEFAULT_APP_URL);
 
     return configuredOrigin !== null && url.origin === configuredOrigin;
@@ -45,29 +45,40 @@ export function ReturnToNukleio() {
   const searchParams = useSearchParams();
   const requestedUrl = searchParams.get("returnTo");
 
-  const [returnUrl, setReturnUrl] = useState(DEFAULT_APP_URL);
+  const safeRequestedUrl =
+    requestedUrl && isAllowedReturnUrl(requestedUrl)
+      ? requestedUrl
+      : null;
 
   useEffect(() => {
-    if (requestedUrl && isAllowedReturnUrl(requestedUrl)) {
-      sessionStorage.setItem(STORAGE_KEY, requestedUrl);
-      setReturnUrl(requestedUrl);
-      return;
+    if (safeRequestedUrl) {
+      sessionStorage.setItem(STORAGE_KEY, safeRequestedUrl);
+    }
+  }, [safeRequestedUrl]);
+
+  function getReturnUrl(): string {
+    if (safeRequestedUrl) {
+      return safeRequestedUrl;
     }
 
     const storedUrl = sessionStorage.getItem(STORAGE_KEY);
 
     if (storedUrl && isAllowedReturnUrl(storedUrl)) {
-      setReturnUrl(storedUrl);
-      return;
+      return storedUrl;
     }
 
     sessionStorage.removeItem(STORAGE_KEY);
-    setReturnUrl(DEFAULT_APP_URL);
-  }, [requestedUrl]);
+
+    return DEFAULT_APP_URL;
+  }
 
   return (
     <a
-      href={returnUrl}
+      href={safeRequestedUrl ?? DEFAULT_APP_URL}
+      onClick={(event) => {
+        event.preventDefault();
+        window.location.assign(getReturnUrl());
+      }}
       className="nextra-focus x:group x:inline-flex x:items-center x:gap-1.5 x:rounded-md x:px-2 x:py-1.5 x:text-sm x:font-medium x:transition-colors x:hover:bg-gray-100 x:dark:hover:bg-neutral-800"
       aria-label="Return to Nukleio"
     >
