@@ -3,4 +3,6 @@
   product: "Product",
   pricing: "Pricing",
   docs: "Docs",
+  contact: "Contact",
+  legal: "Legal",
 };
