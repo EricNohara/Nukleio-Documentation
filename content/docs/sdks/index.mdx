@@ -1,0 +1,36 @@
+---
+title: Nukleio SDKs
+description: Choose and install an official Nukleio client library.
+---
+
+# Nukleio SDKs
+
+The official Nukleio SDKs retrieve your typed public portfolio data without requiring you to build the HTTP request and response handling yourself. Every SDK calls the same read-only API and returns the same [data model](/docs/sdks/data-model).
+
+## Choose a library
+
+| Platform | Package | Install |
+| --- | --- | --- |
+| [JavaScript / TypeScript](/docs/sdks/typescript) | `@nukleio/core` | `npm install @nukleio/core` |
+| [React](/docs/sdks/react) | `@nukleio/react` | `npm install @nukleio/react @nukleio/core` |
+| [Python](/docs/sdks/python) | `nukleio` | `pip install nukleio` |
+| [Java](/docs/sdks/java) | `io.github.ericnohara:nukleio` | Maven or Gradle |
+| [.NET](/docs/sdks/dotnet) | `Nukleio` | `dotnet add package Nukleio` |
+| [Go](/docs/sdks/go) | `github.com/EricNohara/Nukleio-SDKs/sdks/go` | `go get github.com/EricNohara/Nukleio-SDKs/sdks/go` |
+
+## Before you begin
+
+1. [Create a Nukleio API key](/docs/creating-api-keys).
+2. Store it in an environment variable such as `NUKLEIO_API_KEY`.
+3. Install the SDK for your application.
+4. Create a client and request your data.
+
+Do not commit API keys to source control. Server-side applications can keep a key secret. Browser and React applications cannot, so use a dedicated, revocable key and only display information you intend to make public.
+
+## What the SDKs handle
+
+Each client adds the bearer authorization header, parses the `userInfo` response, exposes language-appropriate types, and reports non-successful or malformed responses through a dedicated API error. The API URL can also be overridden for local development or alternative deployments.
+
+See [Error Handling](/docs/sdks/error-handling) for common failure behavior or the [Public API Reference](/docs/public-api-reference) for the underlying HTTP contract.
+
+The SDK source is available in the [Nukleio-SDKs repository](https://github.com/EricNohara/Nukleio-SDKs).

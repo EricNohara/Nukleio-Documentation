@@ -1,0 +1,59 @@
+---
+title: SDK Data Model
+description: Understand the portfolio data returned by every Nukleio SDK.
+---
+
+# SDK Data Model
+
+Every SDK unwraps the API response and returns the `userInfo` object directly. Naming follows each ecosystem: JavaScript, Python, and Go preserve JSON-style names where appropriate, while Java and .NET expose language-native model members.
+
+## User data
+
+The root model includes:
+
+| Group | Fields |
+| --- | --- |
+| Identity | `email`, `name`, `bio`, `phone_number` |
+| Current work | `current_position`, `current_company`, `current_address` |
+| Links | `github_url`, `linkedin_url`, `facebook_url`, `instagram_url`, `x_url` |
+| Files | `portrait_url`, `resume_url`, `transcript_url` |
+| Collections | `skills`, `experiences`, `projects`, `education` |
+| Account | `subscription` |
+
+Most profile text and URL values are nullable. Always render optional fields conditionally.
+
+## Collections
+
+### Skills
+
+A skill has a name plus nullable `proficiency` and `years_of_experience` numbers.
+
+### Experiences
+
+An experience contains an ID, company, job title, nullable start and end dates, and a nullable description.
+
+### Projects
+
+A project contains its name, dates, description, optional repository/demo/thumbnail URLs, and nullable arrays of languages, frameworks, and technologies.
+
+### Education and courses
+
+Education records contain degree, institution, majors, minors, awards, GPA, years, and courses. GPA may be a number, string, or null. Course grade and description values may be null.
+
+### Subscription
+
+The subscription itself may be null. When present, it contains nullable `status` and `price_id` values.
+
+## Example rendering
+
+```ts
+const user = await client.getUserData();
+
+console.log(user.name ?? "Unnamed profile");
+
+for (const project of user.projects) {
+  console.log(project.name, project.demo_url ?? "No demo");
+}
+```
+
+The API may add fields over time. The SDKs ignore or preserve unknown fields as appropriate, so applications should avoid exhaustive assumptions about the response.

@@ -1,0 +1,64 @@
+---
+title: Go SDK
+description: Retrieve typed Nukleio data with the dependency-free Go client.
+---
+
+# Go SDK
+
+The Go module provides a dependency-free client and typed models.
+
+## Install
+
+```bash
+go get github.com/EricNohara/Nukleio-SDKs/sdks/go
+```
+
+## Quick start
+
+```go
+package main
+
+import (
+    "context"
+    "log"
+    "os"
+
+    nukleio "github.com/EricNohara/Nukleio-SDKs/sdks/go"
+)
+
+func main() {
+    client, err := nukleio.NewClient(os.Getenv("NUKLEIO_API_KEY"))
+    if err != nil { log.Fatal(err) }
+
+    user, err := client.GetUserData(context.Background())
+    if err != nil { log.Fatal(err) }
+    log.Println(user.Name)
+}
+```
+
+## Client options
+
+Configure the client with functional options:
+
+```go
+client, err := nukleio.NewClient(
+    apiKey,
+    nukleio.WithAPIURL("http://localhost:3000/api/public/getUserData"),
+    nukleio.WithHTTPClient(&http.Client{Timeout: 10 * time.Second}),
+)
+```
+
+`WithTargetUserID` sets an administrative default. `GetUserDataFor(ctx, targetUserID)` overrides it for one request. Normal user API keys should omit both.
+
+The request follows the supplied `context.Context`, so cancellation and deadlines work normally.
+
+## Errors
+
+HTTP and malformed-response failures return `*nukleio.APIError`, with `StatusCode` and the raw `Body`.
+
+```go
+var apiError *nukleio.APIError
+if errors.As(err, &apiError) {
+    log.Printf("status %d: %s", apiError.StatusCode, apiError.Message)
+}
+```

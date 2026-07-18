@@ -1,0 +1,56 @@
+---
+title: Python SDK
+description: Retrieve typed Nukleio portfolio data from Python.
+---
+
+# Python SDK
+
+The `nukleio` package is a dependency-free typed client for Python.
+
+## Install
+
+```bash
+pip install nukleio
+```
+
+## Quick start
+
+```python
+import os
+from nukleio import NukleioClient, UserData
+
+client = NukleioClient(os.environ["NUKLEIO_API_KEY"])
+user: UserData = client.get_user_data()
+print(user["name"])
+```
+
+`UserData` is a `TypedDict`, so the returned JSON keeps its snake_case field names.
+
+## Configuration
+
+Pass keyword-only constructor arguments to use another endpoint or an administrative target:
+
+```python
+client = NukleioClient(
+    os.environ["NUKLEIO_API_KEY"],
+    api_url="http://localhost:3000/api/public/getUserData",
+    target_user_id="optional-target-id",
+)
+
+user = client.get_user_data(timeout=10)
+```
+
+`get_user_data` accepts a timeout in seconds and can override `target_user_id` for one request.
+
+## Errors
+
+HTTP, network, and invalid-response failures raise `NukleioApiError`. Inspect `status_code` and `response_body` when present.
+
+```python
+from nukleio import NukleioApiError
+
+try:
+    user = client.get_user_data()
+except NukleioApiError as error:
+    print(error.status_code, error.response_body)
+```

@@ -1,0 +1,68 @@
+---
+title: React SDK
+description: Load Nukleio data with a React provider and hooks.
+---
+
+# React SDK
+
+`@nukleio/react` provides a context provider and hooks on top of `@nukleio/core`.
+
+## Install
+
+```bash
+npm install @nukleio/react @nukleio/core
+```
+
+## Add the provider
+
+```tsx
+import { UserProvider } from "@nukleio/react";
+
+export function App() {
+  return (
+    <UserProvider apiKey={import.meta.env.VITE_NUKLEIO_API_KEY}>
+      <Profile />
+    </UserProvider>
+  );
+}
+```
+
+Browser bundles expose environment variables used by client code. Use a dedicated, revocable API key and never render private data on a public site.
+
+## Read loading, data, and errors
+
+```tsx
+import { useUserContext, useUserData } from "@nukleio/react";
+
+function Profile() {
+  const user = useUserData();
+  const { loading, error, refetch } = useUserContext();
+
+  if (loading) return <p>Loading...</p>;
+  if (error) {
+    return <button onClick={() => void refetch()}>Try again</button>;
+  }
+  if (!user) return <p>No profile is available.</p>;
+
+  return <h1>{user.name}</h1>;
+}
+```
+
+`useUserData()` returns `UserData | null`. `useUserContext()` returns `{ data, loading, error, refetch }`. Both hooks must be called beneath `UserProvider`.
+
+## Provider options
+
+The provider accepts `apiKey`, `apiUrl`, `fetch`, and `targetUserId` from the core client, plus:
+
+| Prop | Default | Purpose |
+| --- | --- | --- |
+| `autoFetch` | `true` | Fetch when the provider mounts. Set to `false` for manual loading. |
+| `initialData` | `null` | Seed the context with existing `UserData`, such as server-rendered data. |
+
+```tsx
+<UserProvider apiKey={apiKey} autoFetch={false} initialData={cachedUser}>
+  <Profile />
+</UserProvider>
+```
+
+`refetch()` cancels an older in-flight request, updates the context state, and resolves to `UserData | null`.

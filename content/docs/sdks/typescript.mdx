@@ -1,0 +1,67 @@
+---
+title: JavaScript / TypeScript SDK
+description: Use @nukleio/core in JavaScript and TypeScript applications.
+---
+
+# JavaScript / TypeScript SDK
+
+`@nukleio/core` is a dependency-free client for modern browsers, Node.js 18+, Deno, Bun, and other runtimes that provide `fetch`.
+
+## Install
+
+```bash
+npm install @nukleio/core
+```
+
+## Quick start
+
+```ts
+import { NukleioClient, type UserData } from "@nukleio/core";
+
+const client = new NukleioClient({
+  apiKey: process.env.NUKLEIO_API_KEY!,
+});
+
+const user: UserData = await client.getUserData();
+console.log(user.name);
+```
+
+## Configuration
+
+The constructor accepts `apiKey` and these optional values:
+
+| Option | Purpose |
+| --- | --- |
+| `apiUrl` | Override the public API endpoint. |
+| `fetch` | Supply a custom fetch implementation. |
+| `targetUserId` | Administrative target override; normal user keys should omit it. |
+
+Cancel an individual request with an `AbortSignal`:
+
+```ts
+const controller = new AbortController();
+const request = client.getUserData({ signal: controller.signal });
+
+controller.abort();
+await request;
+```
+
+An individual `getUserData` call can also override `targetUserId`.
+
+## Errors
+
+Failed HTTP and invalid-response errors use `NukleioApiError`. Its `status` and `responseBody` properties preserve the response details.
+
+```ts
+import { NukleioApiError } from "@nukleio/core";
+
+try {
+  const user = await client.getUserData();
+} catch (error) {
+  if (error instanceof NukleioApiError) {
+    console.error(error.status, error.message, error.responseBody);
+  }
+}
+```
+
+See the shared [data model](/docs/sdks/data-model) and [error guide](/docs/sdks/error-handling).
