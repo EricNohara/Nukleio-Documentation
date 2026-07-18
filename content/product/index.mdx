@@ -1,11 +1,11 @@
 ﻿---
 title: Product
-description: Explore Nukleio's portfolio management, public API, analytics, and generative AI tools.
+description: Explore Nukleio's portfolio management, official SDKs, public API, analytics, and generative AI tools.
 ---
 
 # Product
 
-Nukleio is a portfolio management platform for developers who want one source of truth for their professional content. It combines a content dashboard, public portfolio API, usage analytics, billing, and generative AI tools built around job-search workflows.
+Nukleio is a portfolio management platform for developers who want one source of truth for their professional content. It combines a content dashboard, official client libraries, a public portfolio API, usage analytics, billing, and generative AI tools built around job-search workflows.
 
 Use this page as a product overview before moving into the step-by-step docs.
 
@@ -36,6 +36,25 @@ GET /api/public/getUserData
 Your portfolio sends a Nukleio API key as a bearer token. Nukleio validates the key and returns public portfolio data as JSON.
 
 This makes it possible to update content once in Nukleio and reuse it across one or more portfolio frontends.
+
+## Official SDKs and Libraries
+
+Nukleio provides official SDKs that make the public API easier to use from popular languages and frameworks. The libraries handle authentication, requests, response parsing, typed portfolio models, and API errors while leaving your application's presentation entirely under your control.
+
+Official packages are available for:
+
+- JavaScript and TypeScript with `@nukleio/core`
+- React with `@nukleio/react`, including a context provider and data hooks
+- Python with `nukleio`
+- Java with `io.github.ericnohara:nukleio`
+- .NET with `Nukleio`
+- Go with the official Nukleio Go module
+
+Each library returns the same core portfolio data, including profile details, skills, experience, projects, education, files, social links, and subscription information. The SDKs also support endpoint overrides for local development and language-appropriate request cancellation or timeout controls.
+
+Start with the [SDK overview](/docs/sdks) to choose a package, or browse the individual guides for [JavaScript and TypeScript](/docs/sdks/typescript), [React](/docs/sdks/react), [Python](/docs/sdks/python), [Java](/docs/sdks/java), [.NET](/docs/sdks/dotnet), and [Go](/docs/sdks/go).
+
+For integrations that do not need a library, you can continue using the [raw public API](/docs/public-api-reference) directly.
 
 ## Dashboard Analytics
 
@@ -127,14 +146,17 @@ flowchart LR
     A --> C[Portfolio API]
     A --> D[AI Tools]
 
-    C --> E[Connected Portfolio Website]
+    C --> E[Official SDKs]
+    C --> K[Direct HTTP Integration]
+    E --> L[Connected Applications]
+    K --> L
 
     D --> F[Resume Generator]
     D --> G[Cover Letter Generator]
     D --> H[Headshot Generator]
 
     C --> I[API Monitoring]
-    E --> J[Portfolio Analytics]
+    L --> J[Portfolio Analytics]
 ```
 
 **The core idea:** keep your portfolio and professional materials connected to the same organized source of truth.

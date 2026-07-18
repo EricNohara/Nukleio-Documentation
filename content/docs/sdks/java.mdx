@@ -1,0 +1,53 @@
+---
+title: Java SDK
+description: Use the Nukleio client and data classes in Java 11 or newer.
+---
+
+# Java SDK
+
+The Java SDK supports Java 11 and newer.
+
+## Install
+
+Maven:
+
+```xml
+<dependency>
+  <groupId>io.github.ericnohara</groupId>
+  <artifactId>nukleio</artifactId>
+  <version>0.1.0</version>
+</dependency>
+```
+
+Gradle:
+
+```groovy
+implementation "io.github.ericnohara:nukleio:0.1.0"
+```
+
+## Quick start
+
+```java
+import io.github.ericnohara.nukleio.NukleioClient;
+import io.github.ericnohara.nukleio.UserData;
+
+NukleioClient client = new NukleioClient(System.getenv("NUKLEIO_API_KEY"));
+UserData user = client.getUserData();
+System.out.println(user.name);
+```
+
+`getUserData()` can throw `IOException` or `InterruptedException`. HTTP and malformed-response failures use `NukleioApiException`, which exposes the status code and response body.
+
+## Configuration
+
+Use the extended constructor to inject an endpoint and `HttpClient`:
+
+```java
+NukleioClient client = new NukleioClient(
+    System.getenv("NUKLEIO_API_KEY"),
+    URI.create("http://localhost:3000/api/public/getUserData"),
+    HttpClient.newHttpClient()
+);
+```
+
+A four-argument constructor adds a default administrative target user ID. You can also pass a target directly to `getUserData(targetUserId)`. Normal user API keys should omit this option.

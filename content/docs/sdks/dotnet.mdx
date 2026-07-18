@@ -1,0 +1,60 @@
+---
+title: .NET SDK
+description: Retrieve typed Nukleio data from .NET 8 applications.
+---
+
+# .NET SDK
+
+The `Nukleio` package provides an asynchronous client and typed models for .NET 8.
+
+## Install
+
+```bash
+dotnet add package Nukleio
+```
+
+## Quick start
+
+```csharp
+using Nukleio;
+
+var client = new NukleioClient(
+    Environment.GetEnvironmentVariable("NUKLEIO_API_KEY")!
+);
+
+UserData user = await client.GetUserDataAsync();
+Console.WriteLine(user.Name);
+```
+
+## Configuration and cancellation
+
+Inject an `HttpClient`, override the endpoint, or supply an administrative target ID through the constructor:
+
+```csharp
+var client = new NukleioClient(
+    apiKey,
+    httpClient,
+    new Uri("http://localhost:3000/api/public/getUserData")
+);
+
+UserData user = await client.GetUserDataAsync(
+    cancellationToken: cancellationToken
+);
+```
+
+`GetUserDataAsync` can override the target user ID for one call. Normal user keys should omit it.
+
+## Errors
+
+HTTP and invalid-response failures throw `NukleioApiException`. Use its `StatusCode` and `ResponseBody` properties for diagnostics.
+
+```csharp
+try
+{
+    UserData user = await client.GetUserDataAsync();
+}
+catch (NukleioApiException error)
+{
+    Console.Error.WriteLine($"{error.StatusCode}: {error.Message}");
+}
+```

@@ -6,6 +6,7 @@
   "managing-projects": "Managing Projects",
   "files-and-images": "Files and Images",
   "creating-api-keys": "Creating API Keys",
+  sdks: "SDKs & Libraries",
   "connecting-a-portfolio": "Connecting a Portfolio",
   "public-api-reference": "Public API Reference",
   troubleshooting: "Troubleshooting",

@@ -1,0 +1,33 @@
+---
+title: SDK Error Handling
+description: Handle authentication, server, network, and response errors across Nukleio SDKs.
+---
+
+# SDK Error Handling
+
+All clients distinguish API failures from a successful data response. The exact error type follows the language.
+
+| SDK | API error | Status property | Response property |
+| --- | --- | --- | --- |
+| JavaScript / TypeScript | `NukleioApiError` | `status` | `responseBody` |
+| React | Error from the core client in context | inspect `NukleioApiError` | `responseBody` |
+| Python | `NukleioApiError` | `status_code` | `response_body` |
+| Java | `NukleioApiException` | status-code getter | response-body getter |
+| .NET | `NukleioApiException` | `StatusCode` | `ResponseBody` |
+| Go | `*APIError` | `StatusCode` | `Body` |
+
+## Common failures
+
+| Status | Meaning | What to do |
+| --- | --- | --- |
+| `401` | The key is missing, malformed, expired, or invalid. | Verify the environment variable, rotate the key if needed, and retry with the new value. |
+| `500` | Nukleio could not complete the request. | Retry later with bounded backoff. |
+| `200` with an invalid body | The response did not contain a valid `userInfo`. | Record the SDK error and response body, then report the unexpected response. |
+
+Network errors, timeouts, and cancellations may use native runtime errors instead of an HTTP status. Do not retry a deliberately cancelled request.
+
+## Retry guidance
+
+Retry transient network failures and `500` responses with exponential backoff and a small amount of random jitter. Do not automatically retry `401` responses: the credential must be corrected first. Keep retry counts bounded so a failing integration does not overwhelm the service.
+
+Never log a complete API key. Response bodies may also contain details that should not be exposed to visitors, so send diagnostics to protected server logs rather than rendering them directly.
