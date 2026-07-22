@@ -6,9 +6,11 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
+    "clean": "rimraf .next",
     "start": "next start",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "postbuild": "pagefind --site .next/server/app --output-path public/_pagefind"
   },
   "keywords": [],
   "author": "",
@@ -28,6 +30,8 @@
     "eslint": "^9.39.4",
     "eslint-config-next": "^16.2.10",
     "eslint-plugin-simple-import-sort": "^13.0.0",
-    "eslint-plugin-unused-imports": "^4.4.1"
+    "eslint-plugin-unused-imports": "^4.4.1",
+    "pagefind": "^1.5.2",
+    "rimraf": "^6.1.3"
   }
 }

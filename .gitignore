@@ -46,3 +46,8 @@ Thumbs.db
 
 # Turborepo (if you ever use it)
 .turbo/
+
+# Generated search index
+public/_pagefind/
+_pagefind/
+

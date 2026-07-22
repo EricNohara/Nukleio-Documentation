@@ -1,4 +1,4 @@
-import { defineConfig, globalIgnores } from "eslint/config";
+﻿import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTypeScript from "eslint-config-next/typescript";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
@@ -72,8 +72,10 @@ const eslintConfig = defineConfig([
     "build/**",
     "coverage/**",
     "node_modules/**",
+    "public/_pagefind/**",
     "next-env.d.ts",
   ]),
 ]);
 
 export default eslintConfig;
+
